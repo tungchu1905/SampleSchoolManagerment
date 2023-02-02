@@ -8,10 +8,10 @@ namespace SampleSchoolManagermentV1.Controllers.File
     [ApiController]
     public class FileController : ControllerBase
     {
-        public async Task<IActionResult> saveFile()
-        {
-            //Pdf pdf
-            return Ok();
-        }
+        //public async Task<IActionResult> saveFile()
+        //{
+        //    //Pdf pdf
+        //    return Ok();
+        //}
     }
 }
