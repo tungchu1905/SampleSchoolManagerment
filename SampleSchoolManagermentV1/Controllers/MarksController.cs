@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SampleSchoolManagermentV1.DTO;
+using SampleSchoolManagermentV1.Model;
 using SampleSchoolManagermentV1.Services.Interfaces;
 
 namespace SampleSchoolManagermentV1.Controllers
@@ -22,8 +23,8 @@ namespace SampleSchoolManagermentV1.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetAll() {
-            var listMark = await _markService.GetAllMark();
+        public async Task<IActionResult> GetAll([FromQuery] RequestPaginate requestPaginate) {
+            var listMark = await _markService.GetMarkPagedList(requestPaginate);
             return Ok(listMark);
         }
         /// <summary>

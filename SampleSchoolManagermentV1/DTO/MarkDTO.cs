@@ -4,6 +4,7 @@
     {
         public int Id { get; set; }
         public virtual StudentDTO StudentDTO { get; set; } = new StudentDTO();
+        public virtual SubjectDTO SubjectDTO { get; set; } = new SubjectDTO();
 
     }
     public class CreateMarkDTO

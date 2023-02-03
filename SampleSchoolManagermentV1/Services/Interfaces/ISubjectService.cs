@@ -1,5 +1,7 @@
 ﻿using SampleSchoolManagermentV1.DTO;
 using SampleSchoolManagermentV1.Entities;
+using SampleSchoolManagermentV1.Model;
+using X.PagedList;
 
 namespace SampleSchoolManagermentV1.Services.Interfaces
 {
@@ -10,5 +12,7 @@ namespace SampleSchoolManagermentV1.Services.Interfaces
         Task<bool> CreateSubject(CreateSubjectDTO createSubjectDTO);
         Task<bool> UpdateSubject(int id, UpdateSubjectDTO updateSubjectDTO);
         Task<bool> DeleteSubject(int id);
+        //////// 
+        Task<IPagedList<InforSubject>> GetSubjetcPagedList(RequestPaginate requestPaginate);
     }
 }

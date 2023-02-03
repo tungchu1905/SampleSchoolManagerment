@@ -81,9 +81,11 @@ namespace SampleSchoolManagermentV1.Services
             return false;
         }
 
-        public Task<IPagedList<InforMark>> GetMarkPagedList(RequestPaginate requestPaginate)
+        public async Task<IPagedList<InforMark>> GetMarkPagedList(RequestPaginate requestPaginate)
         {
-            throw new NotImplementedException();
+            List<string> include = new List<string> { "InformationStudent", "InformationSubject" };
+            var markList = await _unitOfWork.MarkRepository.GetPagedList(requestPaginate, include);
+            return markList;
         }
 
         public async Task<object> GetAverageMarkOfOneStudent(int id, int semester)
