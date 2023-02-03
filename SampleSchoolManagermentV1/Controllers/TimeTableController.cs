@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Authorization_RoleTest.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SampleSchoolManagermentV1.DTO;
@@ -9,7 +10,7 @@ namespace SampleSchoolManagermentV1.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize(Roles = UserRoles.Admin)]
     public class TimeTableController : ControllerBase
     {
         private readonly ITimeTableService _timeTableService;
