@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using SampleSchoolManagermentV1.DTO;
 using SampleSchoolManagermentV1.Entities;
+using SampleSchoolManagermentV1.Model;
 using SampleSchoolManagermentV1.Repository.UnitOfWork;
 using SampleSchoolManagermentV1.Services.Interfaces;
+using X.PagedList;
 
 namespace SampleSchoolManagermentV1.Services
 {
@@ -74,6 +76,13 @@ namespace SampleSchoolManagermentV1.Services
                 return true;
             }
             return false;
+        }
+
+        public async Task<IPagedList<InforSubject>> GetSubjetcPagedList(RequestPaginate requestPaginate)
+        {
+            List<string> include = new List<string> { "InformationMarks", "InforTimeTables" };
+            var subjectList = await _unitOfWork.SubjectRepository.GetPagedList(requestPaginate, include);
+            return subjectList;
         }
     }
 }

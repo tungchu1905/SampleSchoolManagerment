@@ -4,6 +4,7 @@ using SampleSchoolManagermentV1.Datas;
 using SampleSchoolManagermentV1.Model;
 using System.Linq.Expressions;
 using X.PagedList;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace SampleSchoolManagermentV1.Repository.General
 {
@@ -26,8 +27,16 @@ namespace SampleSchoolManagermentV1.Repository.General
             _schoolContext.Set<T>().Remove(entity);
         }
 
-        public async  Task<T> Get(int id)
+        public async  Task<T> Get(int id, List<string> include = null)
         {
+            IQueryable<T> query = _schoolContext.Set<T>();
+            if (include != null)
+            {
+                foreach (var item in include)
+                {
+                    query = query.Include(item);
+                }
+            }
             return await _schoolContext.Set<T>().FindAsync(id);
         }
 
@@ -55,8 +64,17 @@ namespace SampleSchoolManagermentV1.Repository.General
 
         }
 
-
-
-
+        public async Task<IList<T>> GetAllAsync(List<string> include = null)
+        {
+            IQueryable<T> query = _schoolContext.Set<T>();
+            if (include != null)
+            {
+                foreach (var incudePropery in include)
+                {
+                    query = query.Include(incudePropery);
+                }
+            }
+            return await query.AsNoTracking().ToListAsync();
+        }
     }
 }

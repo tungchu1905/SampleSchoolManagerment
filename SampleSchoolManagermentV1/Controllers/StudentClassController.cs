@@ -1,6 +1,5 @@
 ﻿using Authorization_RoleTest.Model;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SampleSchoolManagermentV1.DTO;
 using SampleSchoolManagermentV1.Model;
@@ -20,15 +19,15 @@ namespace SampleSchoolManagermentV1.Controllers
             _classService = classService;
         }
         /// <summary>
-        /// Lấy tất cả danh sách lớp học (chưa hiển thị học sinh)
+        /// Lấy tất cả danh sách lớp học
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] RequestPaginate requestPaginate)
         {
             //try
             //{
-                var classList = await _classService.GetAllClass();
+                var classList = await _classService.GetClassPagedList(requestPaginate);
                 return Ok(classList);
             //}
             //catch (Exception)
@@ -55,13 +54,14 @@ namespace SampleSchoolManagermentV1.Controllers
         /// <param name="classDTO"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> CreateNewClass(ClassDTO classDTO)
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> CreateNewClass(CreateClassDTO classDTO)
         {
             ClassValidator validationRules = new ClassValidator();
             var validationResult = validationRules.Validate(classDTO);
             if (!validationResult.IsValid)
             {
-                return BadRequest();
+                return StatusCode(StatusCodes.Status400BadRequest, validationResult.Errors);
             }
             await _classService.CraeteClass(classDTO);
             return Ok(classDTO);    
