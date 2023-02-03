@@ -1532,7 +1532,7 @@ namespace SampleSchoolManagermentV1.Migrations
             modelBuilder.Entity("SampleSchoolManagermentV1.Entities.InforStudent", b =>
                 {
                     b.HasOne("SampleSchoolManagermentV1.Entities.InforClass", "InformationClass")
-                        .WithMany("Students")
+                        .WithMany("InformationStudents")
                         .HasForeignKey("ClassId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1553,7 +1553,7 @@ namespace SampleSchoolManagermentV1.Migrations
 
             modelBuilder.Entity("SampleSchoolManagermentV1.Entities.InforClass", b =>
                 {
-                    b.Navigation("Students");
+                    b.Navigation("InformationStudents");
                 });
 
             modelBuilder.Entity("SampleSchoolManagermentV1.Entities.InforStudent", b =>

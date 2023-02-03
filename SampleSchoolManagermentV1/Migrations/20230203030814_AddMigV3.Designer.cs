@@ -12,8 +12,8 @@ using SampleSchoolManagermentV1.Datas;
 namespace SampleSchoolManagermentV1.Migrations
 {
     [DbContext(typeof(SchoolContext))]
-    [Migration("20230122134418_UpdateDatabaseV1")]
-    partial class UpdateDatabaseV1
+    [Migration("20230203030814_AddMigV3")]
+    partial class AddMigV3
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -1534,7 +1534,7 @@ namespace SampleSchoolManagermentV1.Migrations
             modelBuilder.Entity("SampleSchoolManagermentV1.Entities.InforStudent", b =>
                 {
                     b.HasOne("SampleSchoolManagermentV1.Entities.InforClass", "InformationClass")
-                        .WithMany("Students")
+                        .WithMany("InformationStudents")
                         .HasForeignKey("ClassId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1555,7 +1555,7 @@ namespace SampleSchoolManagermentV1.Migrations
 
             modelBuilder.Entity("SampleSchoolManagermentV1.Entities.InforClass", b =>
                 {
-                    b.Navigation("Students");
+                    b.Navigation("InformationStudents");
                 });
 
             modelBuilder.Entity("SampleSchoolManagermentV1.Entities.InforStudent", b =>

@@ -3,6 +3,8 @@
     public class MarkDTO : CreateMarkDTO
     {
         public int Id { get; set; }
+        public virtual StudentDTO StudentDTO { get; set; } = new StudentDTO();
+
     }
     public class CreateMarkDTO
     {

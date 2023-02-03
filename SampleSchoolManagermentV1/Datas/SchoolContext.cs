@@ -12,11 +12,11 @@ namespace SampleSchoolManagermentV1.Datas
     {
         public SchoolContext(DbContextOptions<SchoolContext> options) : base(options) { }
 
-        public DbSet<InforClass> inforClasses { get; set; }
-        public DbSet<InforMark>   inforMarks { get; set; }
-        public DbSet<InforStudent> inforStudents { get; set; }
-        public DbSet<InforSubject> inforSubjects { get; set; }
-        public DbSet<InforTimeTable> inforTimeTables { get; set; }
+        public DbSet<InforClass> informationClass { get; set; }
+        public DbSet<InforMark>   informationMarks { get; set; }
+        public DbSet<InforStudent> informatuonStudents { get; set; }
+        public DbSet<InforSubject> informationSubjects { get; set; }
+        public DbSet<InforTimeTable> informationTimeTables { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

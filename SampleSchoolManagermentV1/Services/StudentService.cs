@@ -68,9 +68,11 @@ namespace SampleSchoolManagermentV1.Services
             return null;
         }
 
-        public Task<IPagedList<InforStudent>> GetStudentPagedList(RequestPaginate requestPaginate)
+        public async Task<IPagedList<InforStudent>> GetStudentPagedList(RequestPaginate requestPaginate)
         {
-            throw new NotImplementedException();
+            List<string> include = new List<string> { "InformationMarks", "InformationClass" };
+            var studentList = await _unitOfWork.StudentRepository.GetPagedList(requestPaginate, include);
+            return studentList;
         }
 
         public async Task<bool> UpdateStudent(int id, UpdateStudentDTO updateClassDTO)

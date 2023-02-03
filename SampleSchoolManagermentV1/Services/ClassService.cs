@@ -26,7 +26,7 @@ namespace SampleSchoolManagermentV1.Services
 
         public async Task<IPagedList<InforClass>> GetClassPagedList(RequestPaginate requestPaginate)
         {
-            List<string> include = new List<string> { "students.student" };
+            List<string> include = new List<string> { "InformationStudents" };
             var classList = await _unitOfWork.ClassRepository.GetPagedList(requestPaginate,include);
             return classList;
         }
