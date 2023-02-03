@@ -1,10 +1,12 @@
-﻿using Authorization_RoleTest.Model;
+﻿using Authorization_RoleTest.Validation;
+using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SampleSchoolManagermentV1.DTO;
-using SampleSchoolManagermentV1.Model;
+using SampleSchoolManagermentV1.Validation;
 using SampleSchoolManagermentV1.Services.Interfaces;
+using SampleSchoolManagermentV1.Validation.FluentValidation;
 
 namespace SampleSchoolManagermentV1.Controllers
 {
@@ -47,6 +49,12 @@ namespace SampleSchoolManagermentV1.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateNewSubject(CreateSubjectDTO createSubjectDTO)
         {
+            SubjectValidator validationRules = new SubjectValidator();
+            var validationResult = validationRules.Validate(createSubjectDTO);
+            if (!validationResult.IsValid)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, validationResult.Errors);
+            }
             var result = await _subjectService.CreateSubject(createSubjectDTO);
             return Ok(result);
         }
@@ -59,6 +67,12 @@ namespace SampleSchoolManagermentV1.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateSubject(int id, UpdateSubjectDTO updateSubjectDTO)
         {
+            SubjectValidator validationRules = new SubjectValidator();
+            var validationResult = validationRules.Validate(updateSubjectDTO);
+            if (!validationResult.IsValid)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, validationResult.Errors);
+            }
             var result = await _subjectService.UpdateSubject(id, updateSubjectDTO);
             return Ok(result);
         }

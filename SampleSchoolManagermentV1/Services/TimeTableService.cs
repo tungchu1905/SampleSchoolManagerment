@@ -1,8 +1,12 @@
 ﻿using AutoMapper;
+using SampleSchoolManagermentV1.Datas;
 using SampleSchoolManagermentV1.DTO;
 using SampleSchoolManagermentV1.Entities;
+using SampleSchoolManagermentV1.Validation;
 using SampleSchoolManagermentV1.Repository.UnitOfWork;
 using SampleSchoolManagermentV1.Services.Interfaces;
+using System.Xml;
+using X.PagedList;
 
 namespace SampleSchoolManagermentV1.Services
 {
@@ -24,7 +28,7 @@ namespace SampleSchoolManagermentV1.Services
 
         public async Task<InforTimeTable> GetInforTimeTable(int id)
         {
-            if(id > 0)
+            if (id > 0)
             {
                 var result = await _unitOfWork.TimeTableRepository.Get(id);
                 if (result != null)
@@ -34,11 +38,22 @@ namespace SampleSchoolManagermentV1.Services
                 return null;
             }
             return null;
-           
+
         }
         public async Task<bool> CreateTimeTable(CreateTimeTableDTO createTimeTableDTO)
         {
-            if(createTimeTableDTO == null)
+            var timeTableLList = await _unitOfWork.TimeTableRepository.GetAllAsync();
+            var twoSubInOneSlot = timeTableLList.Where(x => x.slot.Equals(createTimeTableDTO.slot) && x.Day!.Contains(createTimeTableDTO.Day!));
+            var dupSubjectIn1Day = timeTableLList.Where(x => x.Day!.Contains(createTimeTableDTO.Day!) && x.SubjectId.Equals(createTimeTableDTO.SubjectId));
+            if (dupSubjectIn1Day.Any())
+            {
+                throw new Exception("Da co tiet hoc nay trong ngay");
+            }
+            if (twoSubInOneSlot.Any())
+            {
+                throw new Exception("Da co tiet hoc trong slot nay");
+            }
+            if (createTimeTableDTO == null)
             {
                 return false;
             }
@@ -50,10 +65,10 @@ namespace SampleSchoolManagermentV1.Services
 
         public async Task<bool> DeleteTimeTable(int id)
         {
-            if(id > 0)
+            if (id > 0)
             {
                 var result = await _unitOfWork.TimeTableRepository.Get(id);
-                if(result != null)
+                if (result != null)
                 {
                     _unitOfWork.TimeTableRepository.Delete(result);
                     _unitOfWork.Complete();
@@ -64,12 +79,26 @@ namespace SampleSchoolManagermentV1.Services
             return false;
         }
 
-     
+
 
         public async Task<bool> UpdateTimeTable(int id, UpdateTimeTableDTO updateTimeTableDTO)
         {
             if (id > 0)
             {
+                //var timeTableLList = await _unitOfWork.TimeTableRepository.GetAllAsync();
+                //var twoSubInOneSlot = timeTableLList.Where(x => x.slot.Equals(updateTimeTableDTO.slot) && x.Day!.Contains(updateTimeTableDTO.Day!));
+                //var dupSubjectIn1Day = timeTableLList.Where(x => x.Day!.Contains(updateTimeTableDTO.Day!) && x.SubjectId.Equals(updateTimeTableDTO.SubjectId));
+                //if (dupSubjectIn1Day.Any())
+                //{
+                //    throw new Exception("Da co tiet hoc nay trong ngay");
+                //    //return false;
+                //}
+                //if (twoSubInOneSlot.Any())
+                //{
+                //    throw new Exception("Da co tiet hoc trong slot nay");
+                //    //return false;
+                //}
+
                 var result = await _unitOfWork.TimeTableRepository.Get(id);
                 if (result != null)
                 {
@@ -82,5 +111,15 @@ namespace SampleSchoolManagermentV1.Services
             }
             return false;
         }
+
+        public async Task<IPagedList<InforTimeTable>> GetTimetablePagedList(RequestPaginate requestPaginate)
+        {
+            List<string> include = new List<string> { "InformationSubject" };
+            var timetable = await _unitOfWork.TimeTableRepository.GetPagedList(requestPaginate, include);
+            return timetable;
+            
+        }
+
+        
     }
 }

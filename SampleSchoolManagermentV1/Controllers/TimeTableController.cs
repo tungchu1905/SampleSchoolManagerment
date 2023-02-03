@@ -1,8 +1,9 @@
-﻿using Authorization_RoleTest.Model;
+﻿using Authorization_RoleTest.Validation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SampleSchoolManagermentV1.DTO;
+using SampleSchoolManagermentV1.Validation;
 using SampleSchoolManagermentV1.Services;
 using SampleSchoolManagermentV1.Services.Interfaces;
 
@@ -23,9 +24,9 @@ namespace SampleSchoolManagermentV1.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] RequestPaginate requestPaginate)
         {
-            var listMark = await _timeTableService.GetAllTimeTable();
+            var listMark = await _timeTableService.GetTimetablePagedList(requestPaginate);
             return Ok(listMark);
         }
         /// <summary>

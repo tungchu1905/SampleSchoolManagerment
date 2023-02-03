@@ -1,15 +1,15 @@
-﻿using Authorization_RoleTest.Model;
+﻿using Authorization_RoleTest.Validation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SampleSchoolManagermentV1.DTO;
-using SampleSchoolManagermentV1.Model;
+using SampleSchoolManagermentV1.Validation;
 using SampleSchoolManagermentV1.Services.Interfaces;
 
 namespace SampleSchoolManagermentV1.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = UserRoles.User)]
+    [Authorize(Roles = UserRoles.Admin)]
     public class StudentController : ControllerBase
     {
         private readonly IStudentService _studentService;

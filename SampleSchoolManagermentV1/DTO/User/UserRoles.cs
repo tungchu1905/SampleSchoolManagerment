@@ -1,4 +1,4 @@
-﻿namespace Authorization_RoleTest.Model
+﻿namespace Authorization_RoleTest.Validation
 {
     public static class UserRoles
     {

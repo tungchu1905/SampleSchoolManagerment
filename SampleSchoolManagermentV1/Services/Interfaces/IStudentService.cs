@@ -1,6 +1,6 @@
 ﻿using SampleSchoolManagermentV1.DTO;
 using SampleSchoolManagermentV1.Entities;
-using SampleSchoolManagermentV1.Model;
+using SampleSchoolManagermentV1.Validation;
 using X.PagedList;
 
 namespace SampleSchoolManagermentV1.Services.Interfaces

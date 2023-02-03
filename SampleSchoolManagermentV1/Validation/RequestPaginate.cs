@@ -1,4 +1,4 @@
-﻿namespace SampleSchoolManagermentV1.Model
+﻿namespace SampleSchoolManagermentV1.Validation
 {
     public class RequestPaginate
     {

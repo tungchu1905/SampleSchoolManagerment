@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Query;
-using SampleSchoolManagermentV1.Model;
+using SampleSchoolManagermentV1.Validation;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using X.PagedList;
@@ -16,7 +16,7 @@ namespace SampleSchoolManagermentV1.Repository.General
         void Delete(T entity);
         Task<IPagedList<T>> GetPagedList(RequestPaginate requestPaginate, List<string> include = null);
 
-        /////////////////////////
+      
         Task<IList<T>> GetAllAsync(List<string> include = null);
     }
 }
