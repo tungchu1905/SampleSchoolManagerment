@@ -22,14 +22,13 @@ namespace SampleSchoolManagermentV1.Controllers
         /// <summary>
         /// Lấy tất cả danh sách lớp học (chưa hiển thị học sinh)
         /// </summary>
-        /// <param name="requestPaginate"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery] RequestPaginate requestPaginate)
+        public async Task<IActionResult> GetAll()
         {
             //try
             //{
-                var classList = await _classService.GetClassPagedList(requestPaginate);
+                var classList = await _classService.GetAllClass();
                 return Ok(classList);
             //}
             //catch (Exception)
