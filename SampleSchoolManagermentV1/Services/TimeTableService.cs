@@ -2,7 +2,7 @@
 using SampleSchoolManagermentV1.Datas;
 using SampleSchoolManagermentV1.DTO;
 using SampleSchoolManagermentV1.Entities;
-using SampleSchoolManagermentV1.Model;
+using SampleSchoolManagermentV1.Validation;
 using SampleSchoolManagermentV1.Repository.UnitOfWork;
 using SampleSchoolManagermentV1.Services.Interfaces;
 using System.Xml;

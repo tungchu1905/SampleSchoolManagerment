@@ -1,10 +1,10 @@
-﻿using Authorization_RoleTest.Model;
+﻿using Authorization_RoleTest.Validation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SampleSchoolManagermentV1.DTO;
-using SampleSchoolManagermentV1.Model;
-using SampleSchoolManagermentV1.Model.FluentValidation;
 using SampleSchoolManagermentV1.Services.Interfaces;
+using SampleSchoolManagermentV1.Validation;
+using SampleSchoolManagermentV1.Validation.FluentValidation;
 
 namespace SampleSchoolManagermentV1.Controllers
 {
@@ -25,15 +25,8 @@ namespace SampleSchoolManagermentV1.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery] RequestPaginate requestPaginate)
         {
-            //try
-            //{
                 var classList = await _classService.GetClassPagedList(requestPaginate);
                 return Ok(classList);
-            //}
-            //catch (Exception)
-            //{
-            //    return BadRequest();
-            //}
         }
 
         /// <summary>
@@ -86,13 +79,14 @@ namespace SampleSchoolManagermentV1.Controllers
         /// <param name="updateClassDTO"></param>
         /// <returns></returns>
         [HttpPut]
+        [ProducesResponseType(400)]
         public async Task<IActionResult> UpdateClass(int id, UpdateClassDTO updateClassDTO)
         {
             ClassValidator validationRules = new ClassValidator();
             var validationResult = validationRules.Validate(updateClassDTO);
             if (!validationResult.IsValid)
             {
-                return BadRequest();
+                return StatusCode(StatusCodes.Status400BadRequest, validationResult.Errors);
             }
             await _classService.UpdateClass(id, updateClassDTO);
             return Ok(updateClassDTO);

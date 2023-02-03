@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Query;
-using SampleSchoolManagermentV1.Model;
+using SampleSchoolManagermentV1.Validation;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using X.PagedList;

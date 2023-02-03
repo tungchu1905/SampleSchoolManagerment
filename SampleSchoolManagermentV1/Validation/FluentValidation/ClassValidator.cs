@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using SampleSchoolManagermentV1.DTO;
 
-namespace SampleSchoolManagermentV1.Model.FluentValidation
+namespace SampleSchoolManagermentV1.Validation.FluentValidation
 {
     public class ClassValidator : AbstractValidator<CreateClassDTO>
     {

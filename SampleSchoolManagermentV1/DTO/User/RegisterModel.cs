@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Authorization_RoleTest.Model
+namespace Authorization_RoleTest.Validation
 {
     public class RegisterModel
     {
