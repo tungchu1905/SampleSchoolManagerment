@@ -23,14 +23,23 @@ namespace SampleSchoolManagermentV1.Services
             return (List<InforSubject>)listStudent;
         }
 
-        public async Task<InforSubject> GetInforSubject(int id)
+        public async Task<object> GetInforSubject(int id)
         {
-            if (id > 0)
+            List<string> include = new List<string> { "InformationMarks", "InforTimeTables" };
+            var subjectList = await _unitOfWork.SubjectRepository.GetAllAsync(include);
+            if (subjectList.Any())
             {
-                var detailSubject = await _unitOfWork.SubjectRepository.Get(id);
-                if (detailSubject != null)
+                var result = subjectList.Where(x => x.Id == id)
+               .Select(x => new
+               {
+                   x.SubjectName,
+                   x.Grade,
+                   x.Semester,
+                  inforTimeTable =  x.InforTimeTables.Select(x=> new { x.Day, x.slot })
+               }).FirstOrDefault();
+                if (result != null)
                 {
-                    return detailSubject;
+                    return result;
                 }
                 return null;
             }

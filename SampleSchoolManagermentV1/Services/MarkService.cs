@@ -24,14 +24,24 @@ namespace SampleSchoolManagermentV1.Services
             return (List<InforMark>)listMark;
         }
 
-        public async Task<InforMark> GetDetailMark(int id)
+        public async Task<object> GetDetailMark(int id)
         {
-            if (id > 0)
+            List<string> include = new List<string> { "InformationStudent", "InformationSubject" };
+            var markList = await _unitOfWork.MarkRepository.GetAllAsync(include);
+            if (markList.Any())
             {
-                var detail = await _unitOfWork.MarkRepository.Get(id);
-                if (detail != null)
+                var result = markList.Where(x => x.Id == id)
+               .Select(x => new
+               {
+                   x.typeOfMark,
+                   x.Mark,
+                   x.InformationStudent.StudentName, x.InformationStudent.Address,
+                   x.InformationSubject.SubjectName, x.InformationSubject.Grade, x.InformationSubject.Semester
+                  
+               }).FirstOrDefault();
+                if (result != null)
                 {
-                    return detail;
+                    return result;
                 }
                 return null;
             }

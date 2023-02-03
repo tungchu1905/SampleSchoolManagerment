@@ -12,9 +12,10 @@ namespace SampleSchoolManagermentV1.Services
     {
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
-        public ClassService(IMapper mapper, IUnitOfWork unitOfWork) {
-                _mapper= mapper;
-            _unitOfWork= unitOfWork;
+        public ClassService(IMapper mapper, IUnitOfWork unitOfWork)
+        {
+            _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
 
         // read
@@ -27,14 +28,14 @@ namespace SampleSchoolManagermentV1.Services
         public async Task<IPagedList<InforClass>> GetClassPagedList(RequestPaginate requestPaginate)
         {
             List<string> include = new List<string> { "InformationStudents" };
-            var classList = await _unitOfWork.ClassRepository.GetPagedList(requestPaginate,include);
+            var classList = await _unitOfWork.ClassRepository.GetPagedList(requestPaginate, include);
             return classList;
         }
 
         // create
         public async Task<bool> CraeteClass(CreateClassDTO createClassDTO)
         {
-            if(createClassDTO == null)
+            if (createClassDTO == null)
             {
                 return false;
             }
@@ -44,11 +45,11 @@ namespace SampleSchoolManagermentV1.Services
 
             return result;
         }
-        
+
         //delete
         public async Task<bool> DeleteClass(int id)
         {
-            if(id>0)
+            if (id > 0)
             {
                 var classRoom = await _unitOfWork.ClassRepository.Get(id);
                 _unitOfWork.ClassRepository.Delete(classRoom);
@@ -58,24 +59,32 @@ namespace SampleSchoolManagermentV1.Services
                     return true;
                 }
                 else return false;
-               
+
             }
             return false;
         }
 
-     
+
         // detail
-        public async Task<InforClass> GetDetailClass(int id)
+        public async Task<object> GetDetailClass(int id)
         {
             List<string> include = new List<string> { "InformationStudents" };
-            if (id > 0)
+            var classes = await _unitOfWork.ClassRepository.GetAllAsync(include);
+            if (classes.Any())
             {
-                var classRoom = await _unitOfWork.ClassRepository.Get(id, include);
-                if(classRoom != null)
+                var result = classes.Where(x => x.Id == id)
+               .Select(x => new
+               {
+                   x.ClassName,
+                   x.Grade,
+                   x.TeacherName,
+                   InforStudent =  x.InformationStudents.Select(x=> new { x.StudentName , x.Gender,x.DateOfBirth, x.Address})
+               }).FirstOrDefault();
+                if (result != null)
                 {
-                    return classRoom;
+                    return result;
                 }
-                else  return null;
+                return null;
             }
             return null;
         }
@@ -83,7 +92,7 @@ namespace SampleSchoolManagermentV1.Services
         // update
         public async Task<bool> UpdateClass(int id, UpdateClassDTO updateClassDTO)
         {
-           if(id > 0)
+            if (id > 0)
             {
                 var updateClass = await _unitOfWork.ClassRepository.Get(id);
                 _mapper.Map(updateClassDTO, updateClass);

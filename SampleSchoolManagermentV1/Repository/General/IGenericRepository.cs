@@ -9,7 +9,7 @@ namespace SampleSchoolManagermentV1.Repository.General
     public interface IGenericRepository<T> where T: class
         
     {
-        Task<T> Get(int id, List<string> include = null);
+        Task<T> Get(int id);
         Task<IEnumerable<T>> GetAll();
         Task Add(T entity);
         void Update(T entity);

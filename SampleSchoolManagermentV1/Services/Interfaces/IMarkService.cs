@@ -8,7 +8,7 @@ namespace SampleSchoolManagermentV1.Services.Interfaces
     public interface IMarkService
     {
         Task<List<InforMark>> GetAllMark();
-        Task<InforMark> GetDetailMark(int id);
+        Task<object> GetDetailMark(int id);
         Task<bool> CraeteMark(CreateMarkDTO createMarkDTO);
         Task<bool> UpdateMark(int id, UpdateMarkDTO updateMarkDTO);
         Task<bool> DeleteMark(int id);
