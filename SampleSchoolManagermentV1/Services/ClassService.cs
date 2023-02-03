@@ -65,11 +65,12 @@ namespace SampleSchoolManagermentV1.Services
 
      
         // detail
-        public Task<InforClass> GetDetailClass(int id)
+        public async Task<InforClass> GetDetailClass(int id)
         {
+            List<string> include = new List<string> { "InformationStudents" };
             if (id > 0)
             {
-                var classRoom = _unitOfWork.ClassRepository.Get(id);
+                var classRoom = await _unitOfWork.ClassRepository.Get(id, include);
                 if(classRoom != null)
                 {
                     return classRoom;

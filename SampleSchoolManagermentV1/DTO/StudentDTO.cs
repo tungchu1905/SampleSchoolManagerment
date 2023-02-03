@@ -4,7 +4,7 @@ namespace SampleSchoolManagermentV1.DTO
 {
     public class StudentDTO : CreateStudentDTO
     {
-        public int Id { get; set; }
+        //public int Id { get; set; }
         public virtual ClassDTO ClassDTO { get; set; } = new ClassDTO();
         public virtual ICollection<MarkDTO> MarkDTOs { get; set; } = new List<MarkDTO>();
     }

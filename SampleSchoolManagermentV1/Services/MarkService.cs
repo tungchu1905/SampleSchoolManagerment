@@ -90,55 +90,29 @@ namespace SampleSchoolManagermentV1.Services
 
         public async Task<object> GetAverageMarkOfOneStudent(int id, int semester)
         {
-            
-            var students = await _unitOfWork.StudentRepository.GetAll();
-            var marks = await _unitOfWork.MarkRepository.GetAll();
-            var subjects = await _unitOfWork.SubjectRepository.GetAll();
-            var result = (from s in students
-                          join m in marks
-                      on s.Id equals m.StudentId
-                          join subj in subjects
-                          on m.SubjectId equals subj.Id
-                          where s.Id == id && subj.Semester == semester
-                          select new
-                          {
-                              studentname = s.StudentName,
-                              SubjectName = subj.SubjectName,
-                              average = marks.Average(x => x.Mark)
-
-                          }).FirstOrDefault();
-            //.Average(x => x.Mark);
-            if (result != null)
-            {
-                return result;
-            }
-            else
-                return null;
+            List<string> include = new List<string> { "InformationStudent", "InformationSubject" };
+            var mark = await _unitOfWork.MarkRepository.GetAllAsync(include);
+            var result = mark.Where(x => x.InformationStudent.Id == id 
+                                    && x.InformationSubject.Semester == semester)
+                .Select(x=> new {x.InformationStudent.StudentName
+                , x.InformationSubject.SubjectName
+                , average = mark.Average(x=>x.Mark)}).FirstOrDefault();
+            return result;
 
         }
 
         public async Task<object> GetAverageMarkOnASubjectInOneClass(string subjectName, int classId, int semester)
         {
-            var students = await _unitOfWork.StudentRepository.GetAll();
-            var marks = await _unitOfWork.MarkRepository.GetAll();
-            var subjects = await _unitOfWork.SubjectRepository.GetAll();
-            var result = (from s in students
-                          join m in marks
-                          on s.Id equals m.StudentId
-                          join subj in subjects
-                          on m.SubjectId equals subj.Id
-                          where subj.SubjectName == subjectName && s.ClassId == classId && subj.Semester == semester
-                          select new
-                          {
-                              SubjectName = subj.SubjectName,
-                              average = marks.Average(x => x.Mark)
-                          }).FirstOrDefault();
-            if (result != null)
-            {
-                return result;
-            }
-            else
-                return null;
+            List<string> include = new List<string> { "InformationStudent", "InformationSubject" };
+            var mark = await _unitOfWork.MarkRepository.GetAllAsync(include);
+            var result = mark.Where(x => x.InformationStudent.ClassId == classId 
+                                    && x.InformationSubject.Semester == semester
+                                    && x.InformationSubject.SubjectName.Equals(subjectName))
+                .Select(x => new {
+                    x.InformationStudent.StudentName
+                    ,x.InformationSubject.SubjectName
+                    ,average = mark.Average(x => x.Mark)}).FirstOrDefault();
+            return result;
         }
     }
 }
