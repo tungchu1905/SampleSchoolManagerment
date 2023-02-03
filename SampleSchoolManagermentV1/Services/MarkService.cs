@@ -39,6 +39,12 @@ namespace SampleSchoolManagermentV1.Services
         }
         public async Task<bool> CraeteMark(CreateMarkDTO createMarkDTO)
         {
+            var markList = await _unitOfWork.MarkRepository.GetAllAsync();
+            var dupMark = markList.Where(x => x.typeOfMark!.Contains(createMarkDTO.typeOfMark!) && x.StudentId.Equals(createMarkDTO.StudentId) && x.SubjectId.Equals(createMarkDTO.SubjectId));
+            if (dupMark.Any())
+            {
+                throw new Exception("hs nay da co diem o hang muc nay roi");
+            }
             if (createMarkDTO != null)
             {
                 var newMark = _mapper.Map<InforMark>(createMarkDTO);
@@ -66,8 +72,16 @@ namespace SampleSchoolManagermentV1.Services
         }
         public async Task<bool> UpdateMark(int id, UpdateMarkDTO updateMarkDTO)
         {
+            
             if (id > 0)
             {
+                var markList = await _unitOfWork.MarkRepository.GetAllAsync();
+                var dupMark = markList.Where(x => x.typeOfMark!.Contains(updateMarkDTO.typeOfMark!) && x.StudentId.Equals(updateMarkDTO.StudentId) && x.SubjectId.Equals(updateMarkDTO.SubjectId));
+                if (dupMark.Any())
+                {
+                    //throw new Exception("hs nay da co diem o hang muc nay roi");
+                    return false;
+                }
                 var result = await _unitOfWork.MarkRepository.Get(id);
                 if (result != null)
                 {

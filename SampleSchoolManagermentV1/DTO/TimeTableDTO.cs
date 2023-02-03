@@ -3,6 +3,7 @@
     public class TimeTableDTO : CreateTimeTableDTO
     {
         public int Id { get; set; }
+        public virtual SubjectDTO SubjectDTO { get; set; } = new SubjectDTO();
 
     }
     public class CreateTimeTableDTO

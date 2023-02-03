@@ -16,7 +16,7 @@ namespace SampleSchoolManagermentV1.Repository.General
         void Delete(T entity);
         Task<IPagedList<T>> GetPagedList(RequestPaginate requestPaginate, List<string> include = null);
 
-        /////////////////////////
+      
         Task<IList<T>> GetAllAsync(List<string> include = null);
     }
 }

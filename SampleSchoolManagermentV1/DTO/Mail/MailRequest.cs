@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ResourceAllocationBE.Model
+namespace SampleSchoolManagermentV1.DTO.Mail
 {
     public class MailRequest
     {
