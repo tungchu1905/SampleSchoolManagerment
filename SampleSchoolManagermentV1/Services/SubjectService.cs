@@ -35,7 +35,9 @@ namespace SampleSchoolManagermentV1.Services
                    x.SubjectName,
                    x.Grade,
                    x.Semester,
-                  inforTimeTable =  x.InforTimeTables.Select(x=> new { x.Day, x.slot })
+                  inforTimeTable =  x.InforTimeTables
+                  .Select(x=> new { x.Day, x.slot, x.InformationClass.ClassName })
+                  
                }).FirstOrDefault();
                 if (result != null)
                 {

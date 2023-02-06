@@ -54,15 +54,24 @@ namespace SampleSchoolManagermentV1.Services
         public async Task<bool> CreateTimeTable(CreateTimeTableDTO createTimeTableDTO)
         {
             var timeTableLList = await _unitOfWork.TimeTableRepository.GetAllAsync();
-            var twoSubInOneSlot = timeTableLList.Where(x => x.slot.Equals(createTimeTableDTO.slot) && x.Day!.Contains(createTimeTableDTO.Day!));
-            var dupSubjectIn1Day = timeTableLList.Where(x => x.Day!.Contains(createTimeTableDTO.Day!) && x.SubjectId.Equals(createTimeTableDTO.SubjectId));
+
+            var twoSubInOneSlot = timeTableLList
+                .Where(x => x.slot.Equals(createTimeTableDTO.slot) 
+                && x.Day!.Contains(createTimeTableDTO.Day!)
+                && x.Classid.Equals(createTimeTableDTO.Classid));
+
+            var dupSubjectIn1Day = timeTableLList
+                .Where(x => x.Day!.Contains(createTimeTableDTO.Day!) 
+                && x.SubjectId.Equals(createTimeTableDTO.SubjectId)
+                && x.Classid.Equals(createTimeTableDTO.Classid));
+
             if (dupSubjectIn1Day.Any())
             {
-                throw new Exception("Da co tiet hoc nay trong ngay");
+                throw new Exception("Da co tiet hoc nay cua lop nay trong ngay");
             }
             if (twoSubInOneSlot.Any())
             {
-                throw new Exception("Da co tiet hoc trong slot nay");
+                throw new Exception("Da co tiet hoc trong slot nay cua lop nay");
             }
             if (createTimeTableDTO == null)
             {

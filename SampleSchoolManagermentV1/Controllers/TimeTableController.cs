@@ -35,9 +35,9 @@ namespace SampleSchoolManagermentV1.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("Detail")]
-        public async Task<IActionResult> GetDetail(int id)
+        public async Task<IActionResult> GetDetail(int classId)
         {
-            var result = await _timeTableService.GetInforTimeTableOfOneClass(id);
+            var result = await _timeTableService.GetInforTimeTableOfOneClass(classId);
             return Ok(result);
         }
 

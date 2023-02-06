@@ -21,7 +21,7 @@ namespace SampleSchoolManagermentV1.Controllers
             _subjectService = subjectService;
         }
         /// <summary>
-        /// Lấy danh sách môn học (chưa hiển thị thông tin điểm và thời khóa biểu)
+        /// Lấy danh sách môn học (hiển thị thông tin thời khóa biểu)
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -31,7 +31,7 @@ namespace SampleSchoolManagermentV1.Controllers
             return Ok(listSubject);
         }
         /// <summary>
-        /// Lấy chi tiêt 1 môn học (chưa hiển thị thông tin điểm và thời khóa biểu)
+        /// Lấy chi tiêt 1 môn học (hiển thị thông tin thời khóa biểu)
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
