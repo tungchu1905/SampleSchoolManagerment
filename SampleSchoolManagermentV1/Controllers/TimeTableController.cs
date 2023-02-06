@@ -30,14 +30,14 @@ namespace SampleSchoolManagermentV1.Controllers
             return Ok(listMark);
         }
         /// <summary>
-        /// Lấy chi tiết thời khóa biểu
+        /// Lấy chi tiết thời khóa biểu của một lớp học
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("Detail")]
         public async Task<IActionResult> GetDetail(int id)
         {
-            var result = await _timeTableService.GetInforTimeTable(id);
+            var result = await _timeTableService.GetInforTimeTableOfOneClass(id);
             return Ok(result);
         }
 

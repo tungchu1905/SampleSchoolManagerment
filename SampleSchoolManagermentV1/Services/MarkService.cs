@@ -89,8 +89,8 @@ namespace SampleSchoolManagermentV1.Services
                 var dupMark = markList.Where(x => x.typeOfMark!.Contains(updateMarkDTO.typeOfMark!) && x.StudentId.Equals(updateMarkDTO.StudentId) && x.SubjectId.Equals(updateMarkDTO.SubjectId));
                 if (dupMark.Any())
                 {
-                    //throw new Exception("hs nay da co diem o hang muc nay roi");
-                    return false;
+                    throw new Exception("hs nay da co diem o hang muc nay roi");
+                    //return false;
                 }
                 var result = await _unitOfWork.MarkRepository.Get(id);
                 if (result != null)
@@ -116,11 +116,14 @@ namespace SampleSchoolManagermentV1.Services
         {
             List<string> include = new List<string> { "InformationStudent", "InformationSubject" };
             var mark = await _unitOfWork.MarkRepository.GetAllAsync(include);
-            var result = mark.Where(x => x.InformationStudent.Id == id 
+            var result = mark.Where(x => x.InformationStudent.Id == id
                                     && x.InformationSubject.Semester == semester)
-                .Select(x=> new {x.InformationStudent.StudentName
-                , x.InformationSubject.SubjectName
-                , average = mark.Average(x=>x.Mark)}).FirstOrDefault();
+                .Select(x => new
+                {
+                    x.InformationStudent.StudentName,
+                    x.Mark
+                }).Average(x => x.Mark);
+                //, average = mark.Average(x=>x.Mark)}).FirstOrDefault();
             return result;
 
         }
@@ -132,10 +135,11 @@ namespace SampleSchoolManagermentV1.Services
             var result = mark.Where(x => x.InformationStudent.ClassId == classId 
                                     && x.InformationSubject.Semester == semester
                                     && x.InformationSubject.SubjectName.Equals(subjectName))
-                .Select(x => new {
-                    x.InformationStudent.StudentName
-                    ,x.InformationSubject.SubjectName
-                    ,average = mark.Average(x => x.Mark)}).FirstOrDefault();
+                .Select(x => new
+                {
+                    x.Mark
+                    //average = mark.Average(x => x.Mark)}).FirstOrDefault();
+                }).Average(x => x.Mark);
             return result;
         }
     }

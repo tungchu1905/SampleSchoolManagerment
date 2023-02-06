@@ -26,19 +26,22 @@ namespace SampleSchoolManagermentV1.Services
             return (List<InforTimeTable>)listTime;
         }
 
-        public async Task<object> GetInforTimeTable(int id)
+        public async Task<object> GetInforTimeTableOfOneClass(int id)
         {
-            List<string> include = new List<string> { "InformationSubject" };
+            List<string> include = new List<string> { "InformationSubject", "InformationClass" };
             var timeTableList = await _unitOfWork.TimeTableRepository.GetAllAsync(include);
             if (timeTableList.Any())
             {
-                var result = timeTableList.Where(x => x.Id == id)
+                var result = timeTableList.Where(x => x.Classid == id)
                .Select(x => new
                {
                    x.Day,
                    x.slot,
-                   x.InformationSubject
-               }).FirstOrDefault();
+                   x.InformationSubject.SubjectName,
+                   x.InformationSubject.Grade,
+                   x.InformationClass.ClassName,
+                   x.InformationClass.TeacherName
+               }).ToList();
                 if (result != null)
                 {
                     return result;
@@ -122,7 +125,7 @@ namespace SampleSchoolManagermentV1.Services
 
         public async Task<IPagedList<InforTimeTable>> GetTimetablePagedList(RequestPaginate requestPaginate)
         {
-            List<string> include = new List<string> { "InformationSubject" };
+            List<string> include = new List<string> { "InformationSubject", "InformationClass" };
             var timetable = await _unitOfWork.TimeTableRepository.GetPagedList(requestPaginate, include);
             return timetable;
             
