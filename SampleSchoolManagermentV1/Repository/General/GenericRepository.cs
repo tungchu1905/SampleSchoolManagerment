@@ -27,19 +27,10 @@ namespace SampleSchoolManagermentV1.Repository.General
             _schoolContext.Set<T>().Remove(entity);
         }
 
-        public async  Task<T> Get(int id, List<string> include = null)
+        public async  Task<T> Get(int id)
         {
-            IQueryable<T> query = _schoolContext.Set<T>();
-            if (include != null)
-            {
-                foreach (var item in include)
-                {
-                    query = query.Include(item);
-                }
-            }
             return await _schoolContext.Set<T>().FindAsync(id);
         }
-
 
         public async Task<IEnumerable<T>> GetAll()
         {

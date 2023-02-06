@@ -8,7 +8,7 @@ namespace SampleSchoolManagermentV1.Services.Interfaces
     public interface IClassService
     {
         Task<List<InforClass>> GetAllClass();
-        Task<InforClass> GetDetailClass(int id);
+        Task<object> GetDetailClass(int id);
         Task<bool> CraeteClass(CreateClassDTO createClassDTO);
         Task<bool> UpdateClass(int id, UpdateClassDTO updateClassDTO);
         Task<bool> DeleteClass(int id);

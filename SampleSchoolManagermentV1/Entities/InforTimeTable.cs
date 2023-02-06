@@ -18,6 +18,10 @@ namespace SampleSchoolManagermentV1.Entities
         public int SubjectId { get; set; }
         public virtual InforSubject InformationSubject { get; set; }
 
+        [ForeignKey("InformationClass")]
+        public int Classid { get; set; }
+        public virtual InforClass InformationClass { get; set; }
+
         [Range(1, 10)]
         public int slot { get; set; }
     }

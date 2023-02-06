@@ -54,14 +54,25 @@ namespace SampleSchoolManagermentV1.Services
             return (List<InforStudent>)listStudent;
         }
 
-        public Task<InforStudent> GetDetailStudent(int id)
+        public async Task<object> GetDetailStudent(int id)
         {
-            if (id > 0)
+            List<string> include = new List<string> { "InformationMarks", "InformationClass" };
+            var studentList = await _unitOfWork.StudentRepository.GetAllAsync(include);
+            if (studentList.Any())
             {
-              var detailStudent =  _unitOfWork.StudentRepository.Get(id);
-                if(detailStudent !=null)
+                var result = studentList.Where(x => x.Id == id)
+               .Select(x => new
+               {
+                   x.StudentName,
+                   x.Gender,
+                   x.DateOfBirth,
+                   x.Address,
+                   x.InformationClass.ClassName, x.InformationClass.Grade, x.InformationClass.TeacherName
+                   
+               }).FirstOrDefault();
+                if (result != null)
                 {
-                    return detailStudent;
+                    return result;
                 }
                 return null;
             }
