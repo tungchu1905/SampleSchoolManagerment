@@ -19,7 +19,7 @@ namespace SampleSchoolManagermentV1.Controllers
             _markService = markService;
         }
         /// <summary>
-        /// Hiển thị danh sách điểm (chưa hiển thị tên học sinh)
+        /// Hiển thị danh sách điểm ( hiển thị thông tin học sinh)
         /// </summary>
         /// <returns></returns>
         [HttpGet]

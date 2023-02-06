@@ -18,7 +18,7 @@ namespace SampleSchoolManagermentV1.Controllers
             _studentService = studentService;
         }
         /// <summary>
-        /// Lấy tất cả danh sách học sinh (chưa hiển thị thông tin class và điểm)
+        /// Lấy tất cả danh sách học sinh (hiển thị thông tin lớp học và điểm của học sinh)
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -28,7 +28,7 @@ namespace SampleSchoolManagermentV1.Controllers
             return Ok(listStudent);
         }
         /// <summary>
-        /// Lấy thông tin của một học sinh (chưa hiển thị thông tin class và điểm)
+        /// Lấy thông tin của một học sinh (hiển thị thông tin lớp học và điểm của học sinh)
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
