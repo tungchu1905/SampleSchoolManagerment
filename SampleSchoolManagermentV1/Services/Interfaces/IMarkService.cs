@@ -18,5 +18,8 @@ namespace SampleSchoolManagermentV1.Services.Interfaces
 
         Task<object> GetAverageMarkOfOneStudent(int id, int semester);
         Task<object> GetAverageMarkOnASubjectInOneClass(string subjectName, int classId, int semester);
+
+        Task<object> GetMarkByTypeOfMark(string typeOfMark, int grade, int semester);
+        Task<object> GetAverageMarkOfSubjectOneStudentInSemester(int studentId, string subjectName, int semester);
     }
 }

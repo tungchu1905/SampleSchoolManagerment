@@ -28,7 +28,7 @@ namespace SampleSchoolManagermentV1.Controllers
             return Ok(listMark);
         }
         /// <summary>
-        /// Lấy chi tiết điểm
+        /// Lấy chi tiết điểm theo id 
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -61,7 +61,7 @@ namespace SampleSchoolManagermentV1.Controllers
         public async Task<IActionResult> Update(int id, UpdateMarkDTO updateMarkDTO)
         {
             var result = await _markService.UpdateMark(id, updateMarkDTO);
-            return Ok(result);  
+            return Ok(result);
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace SampleSchoolManagermentV1.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var result = await _markService.DeleteMark(id);
-            return Ok(result);  
+            return Ok(result);
         }
 
         /// <summary>
@@ -82,10 +82,10 @@ namespace SampleSchoolManagermentV1.Controllers
         /// <param name="id"></param>
         /// <param name="semester"></param>
         /// <returns></returns>
-        [HttpGet("getOneStudentMark")]
-        public async Task<IActionResult> GetAverageMarkOfOneStudent(int id, int semester)
+        [HttpGet("getAvgOneStudentMark")]
+        public async Task<IActionResult> GetAverageMarkOfOneStudent(int studentId, int semester)
         {
-            var result = await _markService.GetAverageMarkOfOneStudent(id, semester);
+            var result = await _markService.GetAverageMarkOfOneStudent(studentId, semester);
             return Ok(result);
         }
 
@@ -99,7 +99,33 @@ namespace SampleSchoolManagermentV1.Controllers
         [HttpGet("AvgMarkClass")]
         public async Task<IActionResult> GetAvgSubjectMarkOfOneClass(string subjectName, int classId, int semester)
         {
-            var result = await _markService.GetAverageMarkOnASubjectInOneClass(subjectName,classId, semester);
+            var result = await _markService.GetAverageMarkOnASubjectInOneClass(subjectName, classId, semester);
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Lấy danh sách điểm học sinh theo loại điểm, khối và học kì
+        /// </summary>
+        /// <param name="typeOfMark"></param>
+        /// <returns></returns>
+        [HttpGet("GetListType")]
+        public async Task<IActionResult> GetDetailList(string typeOfMark, int grade, int semester)
+        {
+            var result = await _markService.GetMarkByTypeOfMark(typeOfMark, grade, semester);
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Lấy điểm trung bình của một môn của một học sinh trong một học kì
+        /// </summary>
+        /// <param name="studentId"></param>
+        /// <param name="subjectName"></param>
+        /// <param name="semester"></param>
+        /// <returns></returns>
+        [HttpGet("GetAvgStudentMarkOfOneSubject")]
+        public async Task<IActionResult> GetAverageStudentMark(int studentId, string subjectName, int semester)
+        {
+            var result = await _markService.GetAverageMarkOfSubjectOneStudentInSemester(studentId, subjectName, semester);
             return Ok(result);
         }
     }

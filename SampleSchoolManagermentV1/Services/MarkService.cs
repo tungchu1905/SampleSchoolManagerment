@@ -5,6 +5,7 @@ using SampleSchoolManagermentV1.Validation;
 using SampleSchoolManagermentV1.Repository.UnitOfWork;
 using SampleSchoolManagermentV1.Services.Interfaces;
 using X.PagedList;
+using System.Diagnostics;
 
 namespace SampleSchoolManagermentV1.Services
 {
@@ -141,6 +142,64 @@ namespace SampleSchoolManagermentV1.Services
                     //average = mark.Average(x => x.Mark)}).FirstOrDefault();
                 }).Average(x => x.Mark);
             return result;
+        }
+
+        public async Task<object> GetMarkByTypeOfMark(string typeOfMark, int grade, int semester)
+        {
+            List<string> include = new List<string> { "InformationStudent", "InformationSubject" };
+            var markList = await _unitOfWork.MarkRepository.GetAllAsync(include);
+            if (markList.Any())
+            {
+                var result = markList.Where(x => x.typeOfMark.Equals(typeOfMark)
+                                            && x.InformationSubject.Grade == grade
+                                            && x.InformationSubject.Semester == semester)
+               .Select(x => new
+               {
+                   x.typeOfMark,
+                   x.Mark,
+                   x.InformationStudent.StudentName,
+                   x.InformationStudent.Address,
+                   x.InformationSubject.SubjectName,
+                   x.InformationSubject.Grade,
+                   x.InformationSubject.Semester
+
+               }).ToList();
+                if (result != null)
+                {
+                    return result;
+                }
+                return null;
+            }
+            return null;
+        }
+
+        public async Task<object> GetAverageMarkOfSubjectOneStudentInSemester(int studentId, string subjectName, int semester)
+        {
+            List<string> include = new List<string> { "InformationStudent", "InformationSubject" };
+            var markList = await _unitOfWork.MarkRepository.GetAllAsync(include);
+            if (markList.Any())
+            {
+                var result = markList.Where(x => x.StudentId.Equals(studentId)
+                                            && x.InformationSubject.SubjectName == subjectName
+                                            && x.InformationSubject.Semester == semester)
+               .Select(x => new
+               {
+                   x.typeOfMark,
+                   x.Mark,
+                   x.InformationStudent.StudentName,
+                   x.InformationStudent.Address,
+                   x.InformationSubject.SubjectName,
+                   x.InformationSubject.Grade,
+                   x.InformationSubject.Semester
+
+               }).Average(x => x.Mark);
+                if (result != null)
+                {
+                    return result;
+                }
+                return null;
+            }
+            return null;
         }
     }
 }

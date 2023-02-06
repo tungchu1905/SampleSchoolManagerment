@@ -40,8 +40,4 @@
     <PackageReference Include="X.PagedList" Version="8.4.3" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\File\" />
-  </ItemGroup>
-
 </Project>
