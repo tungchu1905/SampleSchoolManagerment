@@ -15,6 +15,12 @@ namespace SampleSchoolManagermentV1.Controllers.Email
         {
             this.mailService = mailService;
         }
+
+        /// <summary>
+        /// Gửi mail 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPost("sendMail")]
         public async Task<IActionResult> receiveMailPassword([FromForm] MailModel request)
         {

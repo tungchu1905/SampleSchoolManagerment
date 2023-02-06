@@ -1,3 +1,5 @@
+using DinkToPdf;
+using DinkToPdf.Contracts;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +12,8 @@ using SampleSchoolManagermentV1.Repository.Repositories.Interfaces;
 using SampleSchoolManagermentV1.Repository.UnitOfWork;
 using SampleSchoolManagermentV1.Services;
 using SampleSchoolManagermentV1.Services.Interfaces;
+using SampleSchoolManagermentV1.Validation;
+using System.IO;
 using System.Reflection;
 using System.Text;
 
@@ -116,6 +120,11 @@ builder.Services.AddCors(p => p.AddPolicy("MyCors", build =>
     //build.WithOrigins("https://localhost:3000");
     build.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
 }));
+
+
+var converter = new SynchronizedConverter(new PdfTools()); 
+builder.Services.AddSingleton(converter);
+builder.Services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
 
 
 var app = builder.Build();
