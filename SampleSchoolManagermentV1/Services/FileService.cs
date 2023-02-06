@@ -6,11 +6,11 @@ using SampleSchoolManagermentV1.Services.Interfaces;
 using System.Collections;
 using System.Text;
 
-namespace SampleSchoolManagermentV1.Validation
+namespace SampleSchoolManagermentV1.Services
 {
     public static class FileService
     {
-
+        //test
         public static List<InforTimeTable> GetTimeTables() =>
             new List<InforTimeTable>()
             {

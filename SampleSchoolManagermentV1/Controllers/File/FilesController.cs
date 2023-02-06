@@ -4,8 +4,8 @@ using JetBrains.Annotations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SampleSchoolManagermentV1.Datas;
+using SampleSchoolManagermentV1.Services;
 using SampleSchoolManagermentV1.Services.Interfaces;
-using SampleSchoolManagermentV1.Validation;
 using System.Text;
 
 namespace SampleSchoolManagermentV1.Controllers.File
