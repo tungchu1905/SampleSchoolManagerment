@@ -10,7 +10,7 @@ namespace SampleSchoolManagermentV1.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = UserRoles.Admin)]
+    //[Authorize(Roles = UserRoles.Admin)]
     public class StudentClassController : ControllerBase
     {
         private readonly IClassService _classService;
@@ -30,7 +30,7 @@ namespace SampleSchoolManagermentV1.Controllers
         }
 
         /// <summary>
-        /// Lấy chi tiết lớp học (chưa bao gồm số học sinh trong lớp)
+        /// Lấy chi tiết lớp học (bao gồm tên gv chủ nhiệm và số học sinh trong lớp)
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
