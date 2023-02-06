@@ -36,7 +36,7 @@ namespace SampleSchoolManagermentV1.Services
                    x.Grade,
                    x.Semester,
                   inforTimeTable =  x.InforTimeTables
-                  .Select(x=> new { x.Day, x.slot, x.InformationClass.ClassName })
+                  .Select(x=> new { x.Day, x.slot, x.Classid, x.InformationClass })
                   
                }).FirstOrDefault();
                 if (result != null)
@@ -89,11 +89,29 @@ namespace SampleSchoolManagermentV1.Services
             return false;
         }
 
-        public async Task<IPagedList<InforSubject>> GetSubjetcPagedList(RequestPaginate requestPaginate)
+        public async Task<object> GetSubjetcPagedList(RequestPaginate requestPaginate)
         {
             List<string> include = new List<string> { "InformationMarks", "InforTimeTables" };
             var subjectList = await _unitOfWork.SubjectRepository.GetPagedList(requestPaginate, include);
-            return subjectList;
+            if (subjectList.Any())
+            {
+                var result = subjectList
+               .Select(x => new
+               {
+                   x.SubjectName,
+                   x.Grade,
+                   x.Semester,
+                   inforTimeTable = x.InforTimeTables
+                  .Select(x => new { x.Day, x.slot, x.Classid, x.InformationClass })
+
+               }).FirstOrDefault();
+                if (result != null)
+                {
+                    return result;
+                }
+                return null;
+            }
+            return null;
         }
     }
 }

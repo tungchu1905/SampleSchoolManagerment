@@ -14,7 +14,7 @@ namespace SampleSchoolManagermentV1.Services.Interfaces
         Task<bool> DeleteMark(int id);
 
         //////// 
-        Task<IPagedList<InforMark>> GetMarkPagedList(RequestPaginate requestPaginate);
+        Task<object> GetMarkPagedList(RequestPaginate requestPaginate);
 
         Task<object> GetAverageMarkOfOneStudent(int id, int semester);
         Task<object> GetAverageMarkOnASubjectInOneClass(string subjectName, int classId, int semester);

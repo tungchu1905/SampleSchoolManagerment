@@ -13,6 +13,6 @@ namespace SampleSchoolManagermentV1.Services.Interfaces
         Task<bool> UpdateTimeTable(int id, UpdateTimeTableDTO updateTimeTableDTO);
         Task<bool> DeleteTimeTable(int id);
 
-        Task<IPagedList<InforTimeTable>> GetTimetablePagedList(RequestPaginate requestPaginate);
+        Task<object> GetTimetablePagedList(RequestPaginate requestPaginate);
     }
 }

@@ -25,11 +25,27 @@ namespace SampleSchoolManagermentV1.Services
             return (List<InforClass>)classes;
         }
 
-        public async Task<IPagedList<InforClass>> GetClassPagedList(RequestPaginate requestPaginate)
+        public async Task<object> GetClassPagedList(RequestPaginate requestPaginate)
         {
             List<string> include = new List<string> { "InformationStudents" };
             var classList = await _unitOfWork.ClassRepository.GetPagedList(requestPaginate, include);
-            return classList;
+            if (classList.Any())
+            {
+                var result = classList
+               .Select(x => new
+               {
+                   x.ClassName,
+                   x.Grade,
+                   x.TeacherName,
+                   InforStudent = x.InformationStudents.Select(x => new { x.StudentName, x.Gender, x.DateOfBirth, x.Address })
+               }).ToList();
+                if (result != null)
+                {
+                    return result;
+                }
+                return null;
+            }
+            return null;
         }
 
         // create

@@ -67,8 +67,8 @@ namespace SampleSchoolManagermentV1.Services
                    x.Gender,
                    x.DateOfBirth,
                    x.Address,
-                   x.InformationClass.ClassName, x.InformationClass.Grade, x.InformationClass.TeacherName
-                   
+                   x.InformationClass.ClassName, x.InformationClass.Grade, x.InformationClass.TeacherName,
+                   Marks = x.InformationMarks.Select(x => new { x.typeOfMark, x.Mark, x.InformationSubject })
                }).FirstOrDefault();
                 if (result != null)
                 {
@@ -79,11 +79,33 @@ namespace SampleSchoolManagermentV1.Services
             return null;
         }
 
-        public async Task<IPagedList<InforStudent>> GetStudentPagedList(RequestPaginate requestPaginate)
+        public async Task<object> GetStudentPagedList(RequestPaginate requestPaginate)
         {
-            List<string> include = new List<string> { "InformationMarks", "InformationClass" };
+            List<string> include = new List<string> { "InformationMarks", "InformationClass", "InformationSubject" };
             var studentList = await _unitOfWork.StudentRepository.GetPagedList(requestPaginate, include);
-            return studentList;
+            if (studentList.Any())
+            {
+                var result = studentList
+               .Select(x => new
+               {
+                   x.StudentName,
+                   x.Gender,
+                   x.DateOfBirth,
+                   x.Address,
+                   x.InformationClass.ClassName,
+                   x.InformationClass.Grade,
+                   x.InformationClass.TeacherName,
+                  Marks =  x.InformationMarks.Select(x=> new {x.typeOfMark, x.Mark, x.InformationSubject})
+
+
+               }).ToList();
+                if (result != null)
+                {
+                    return result;
+                }
+                return null;
+            }
+            return null;
         }
 
         public async Task<bool> UpdateStudent(int id, UpdateStudentDTO updateClassDTO)

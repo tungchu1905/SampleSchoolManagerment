@@ -14,6 +14,6 @@ namespace SampleSchoolManagermentV1.Services.Interfaces
         Task<bool> DeleteStudent(int id);
 
         //////// 
-        Task<IPagedList<InforStudent>> GetStudentPagedList(RequestPaginate requestPaginate);
+        Task<object> GetStudentPagedList(RequestPaginate requestPaginate);
     }
 }

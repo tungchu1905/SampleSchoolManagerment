@@ -13,6 +13,6 @@ namespace SampleSchoolManagermentV1.Services.Interfaces
         Task<bool> UpdateSubject(int id, UpdateSubjectDTO updateSubjectDTO);
         Task<bool> DeleteSubject(int id);
         //////// 
-        Task<IPagedList<InforSubject>> GetSubjetcPagedList(RequestPaginate requestPaginate);
+        Task<object> GetSubjetcPagedList(RequestPaginate requestPaginate);
     }
 }

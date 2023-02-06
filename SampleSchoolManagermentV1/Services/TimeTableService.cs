@@ -132,12 +132,30 @@ namespace SampleSchoolManagermentV1.Services
             return false;
         }
 
-        public async Task<IPagedList<InforTimeTable>> GetTimetablePagedList(RequestPaginate requestPaginate)
+        public async Task<object> GetTimetablePagedList(RequestPaginate requestPaginate)
         {
             List<string> include = new List<string> { "InformationSubject", "InformationClass" };
             var timetable = await _unitOfWork.TimeTableRepository.GetPagedList(requestPaginate, include);
-            return timetable;
-            
+            if (timetable.Any())
+            {
+                var result = timetable
+               .Select(x => new
+               {
+                   x.Day,
+                   x.slot,
+                   x.InformationSubject.SubjectName,
+                   x.InformationSubject.Grade,
+                   x.InformationClass.ClassName,
+                   x.InformationClass.TeacherName
+               }).ToList();
+                if (result != null)
+                {
+                    return result;
+                }
+                return null;
+            }
+            return null;
+
         }
 
         
