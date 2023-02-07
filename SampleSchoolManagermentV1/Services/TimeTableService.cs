@@ -55,25 +55,24 @@ namespace SampleSchoolManagermentV1.Services
         {
             var timeTableLList = await _unitOfWork.TimeTableRepository.GetAllAsync();
 
-            //var twoSubInOneSlot = timeTableLList
-            //    .Where(x => x.slot.Equals(createTimeTableDTO.slot) 
-            //    && x.Day!.Contains(createTimeTableDTO.Day!)
-            //    && x.Classid.Equals(createTimeTableDTO.Classid));
+            var twoSubInOneSlot = timeTableLList
+                .Where(x => x.slot.Equals(createTimeTableDTO.slot) 
+                && x.Day!.Contains(createTimeTableDTO.Day!)
+                && x.Classid.Equals(createTimeTableDTO.Classid));
 
             var dupSubjectIn1Day = timeTableLList
                 .Where(x => x.Day!.Contains(createTimeTableDTO.Day!) 
                 && x.SubjectId.Equals(createTimeTableDTO.SubjectId)
-                && (x.slot.Equals(createTimeTableDTO.slot)
-                            || x.SubjectId.Equals(createTimeTableDTO.SubjectId)));
+                && x.Classid.Equals(createTimeTableDTO.Classid));
 
             if (dupSubjectIn1Day.Any())
             {
                 throw new Exception("Da co tiet hoc nay cua lop nay trong ngay, khong the tao moi");
             }
-            //if (twoSubInOneSlot.Any())
-            //{
-            //    throw new Exception("Da co tiet hoc trong slot nay cua lop nay, khong the tao moi");
-            //}
+            if (twoSubInOneSlot.Any())
+            {
+                throw new Exception("Da co tiet hoc trong slot nay cua lop nay, khong the tao moi");
+            }
             if (createTimeTableDTO == null)
             {
                 return false;
