@@ -54,7 +54,7 @@ namespace SampleSchoolManagermentV1.Controllers
         }
 
         /// <summary>
-        /// Cập nhật thời khóa biểu (chưa check)
+        /// Cập nhật thời khóa biểu (chưa check đủ)
         /// </summary>
         /// <param name="id"></param>
         /// <param name="updateTimeTableDTO"></param>
