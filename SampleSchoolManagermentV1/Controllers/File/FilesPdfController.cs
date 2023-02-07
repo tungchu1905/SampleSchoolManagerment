@@ -12,21 +12,21 @@ namespace SampleSchoolManagermentV1.Controllers.File
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FilesController : ControllerBase
+    public class FilesPdfController : ControllerBase
     {
         private SchoolContext _context { get; }
         private readonly ITimeTableService _timeTableService;
         private readonly IConverter _converter;
-        public FilesController(SchoolContext schoolContext, ITimeTableService timeTableService, IConverter converter)
+        public FilesPdfController(SchoolContext schoolContext, ITimeTableService timeTableService, IConverter converter)
         {
             _context = schoolContext;
             _timeTableService = timeTableService;
             _converter = converter;
         }
-        
+
 
         /// <summary>
-        ///  Export data thời khóa biểu sang file pdf (chưa xong)
+        ///  Export data thời khóa biểu sang file pdf (lỗi Unable to load DLL 'libwkhtmltox')
         /// </summary>
         /// <returns></returns>
         [HttpGet]

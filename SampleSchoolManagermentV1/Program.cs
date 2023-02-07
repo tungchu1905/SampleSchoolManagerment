@@ -85,6 +85,9 @@ builder.Services.AddScoped<IMarkService, MarkService>();
 builder.Services.AddScoped<ITimeTableRepository, TimeTableRepository>();
 builder.Services.AddScoped<ITimeTableService, TimeTableService>();
 
+
+builder.Services.AddScoped<IFileExcelService, FileExcelService>();
+
 // user 
 
 //identity
