@@ -13,10 +13,12 @@ namespace SampleSchoolManagermentV1.Services
     {
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
-        public MarkService(IMapper mapper, IUnitOfWork unitOfWork)
+        private readonly ILogger<MarkService> _logger;  
+        public MarkService(IMapper mapper, IUnitOfWork unitOfWork, ILogger<MarkService> logger)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
+            _logger = logger;
         }
 
         public async Task<List<InforMark>> GetAllMark()
@@ -144,9 +146,10 @@ namespace SampleSchoolManagermentV1.Services
                 .Select(x => new
                 {
                     x.InformationStudent.StudentName,
-                    x.Mark
-                }).Average(x => x.Mark);
-                //, average = mark.Average(x=>x.Mark)}).FirstOrDefault();
+                    x.InformationSubject.Semester,
+                    average = mark.Where(x => x.InformationStudent.Id == id
+                                    && x.InformationSubject.Semester == semester).Average(x => x.Mark)
+                }).FirstOrDefault();
             return result;
 
         }
@@ -160,9 +163,13 @@ namespace SampleSchoolManagermentV1.Services
                                     && x.InformationSubject.SubjectName.Equals(subjectName))
                 .Select(x => new
                 {
-                    x.Mark
-                    //average = mark.Average(x => x.Mark)}).FirstOrDefault();
-                }).Average(x => x.Mark);
+
+                    x.InformationSubject.SubjectName,
+                    x.InformationStudent.ClassId,
+                    average = mark.Where(x => x.InformationStudent.ClassId == classId
+                                    && x.InformationSubject.Semester == semester
+                                    && x.InformationSubject.SubjectName.Equals(subjectName)).Average(x => x.Mark)
+                }).FirstOrDefault();
             return result;
         }
 
@@ -206,15 +213,15 @@ namespace SampleSchoolManagermentV1.Services
                                             && x.InformationSubject.Semester == semester)
                .Select(x => new
                {
-                   x.typeOfMark,
-                   x.Mark,
                    x.InformationStudent.StudentName,
-                   x.InformationStudent.Address,
                    x.InformationSubject.SubjectName,
                    x.InformationSubject.Grade,
-                   x.InformationSubject.Semester
+                   x.InformationSubject.Semester,
+                   average = markList.Where(x => x.StudentId.Equals(studentId)
+                                            && x.InformationSubject.SubjectName == subjectName
+                                            && x.InformationSubject.Semester == semester).Average(x=>x.Mark)
 
-               }).Average(x => x.Mark);
+               }).FirstOrDefault();
                 if (result != null)
                 {
                     return result;
