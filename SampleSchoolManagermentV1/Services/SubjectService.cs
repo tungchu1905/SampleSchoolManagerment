@@ -32,6 +32,7 @@ namespace SampleSchoolManagermentV1.Services
                 var result = subjectList.Where(x => x.Id == id)
                .Select(x => new
                {
+                   x.Id,
                    x.SubjectName,
                    x.Grade,
                    x.Semester,
@@ -98,6 +99,7 @@ namespace SampleSchoolManagermentV1.Services
                 var result = subjectList
                .Select(x => new
                {
+                   x.Id,
                    x.SubjectName,
                    x.Grade,
                    x.Semester,

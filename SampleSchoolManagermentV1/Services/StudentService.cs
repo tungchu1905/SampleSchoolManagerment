@@ -63,6 +63,7 @@ namespace SampleSchoolManagermentV1.Services
                 var result = studentList.Where(x => x.Id == id)
                .Select(x => new
                {
+                   x.Id,
                    x.StudentName,
                    x.Gender,
                    x.DateOfBirth,
@@ -88,6 +89,7 @@ namespace SampleSchoolManagermentV1.Services
                 var result = studentList
                .Select(x => new
                {
+                   x.Id,
                    x.StudentName,
                    x.Gender,
                    x.DateOfBirth,

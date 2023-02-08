@@ -12,8 +12,7 @@ using SampleSchoolManagermentV1.Repository.Repositories.Interfaces;
 using SampleSchoolManagermentV1.Repository.UnitOfWork;
 using SampleSchoolManagermentV1.Services;
 using SampleSchoolManagermentV1.Services.Interfaces;
-using SampleSchoolManagermentV1.Validation;
-using System.IO;
+using Serilog;
 using System.Reflection;
 using System.Text;
 
@@ -21,8 +20,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-// add newton
 
+//add serilog 
+var logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .Enrich.FromLogContext()
+    .CreateLogger();
+builder.Logging.ClearProviders();
+builder.Logging.AddSerilog(logger);
+
+// add newton
 builder.Services.AddControllers().AddNewtonsoftJson(op => 
 op.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore) ;
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -120,8 +127,8 @@ builder.Services.AddAuthentication(options =>
 // Add CORS
 builder.Services.AddCors(p => p.AddPolicy("MyCors", build =>
 {
-    //build.WithOrigins("https://localhost:3000");
-    build.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+    build.WithOrigins("https://localhost:3000").AllowAnyMethod().AllowAnyHeader(); 
+    //build.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
 }));
 
 

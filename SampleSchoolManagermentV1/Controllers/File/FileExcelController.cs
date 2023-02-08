@@ -22,7 +22,7 @@ namespace SampleSchoolManagermentV1.Controllers.File
         }
 
         /// <summary>
-        /// Lưu thông tin 
+        /// Lưu thông tin thời khóa biểu của 1 lớp vào excel 
         /// </summary>
         /// <returns></returns>
         [HttpGet("DowloadFileExcelTimeTable")]

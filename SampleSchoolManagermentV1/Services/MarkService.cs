@@ -34,6 +34,7 @@ namespace SampleSchoolManagermentV1.Services
                 var result = markList.Where(x => x.Id == id)
                .Select(x => new
                {
+                   x.Id,
                    x.typeOfMark,
                    x.Mark,
                    x.InformationStudent.StudentName, x.InformationStudent.Address,
@@ -115,6 +116,7 @@ namespace SampleSchoolManagermentV1.Services
                 var result = markList
                .Select(x => new
                {
+                   x.Id,
                    x.typeOfMark,
                    x.Mark,
                    x.InformationStudent.StudentName,

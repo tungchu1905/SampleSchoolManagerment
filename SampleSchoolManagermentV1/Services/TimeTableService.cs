@@ -35,6 +35,7 @@ namespace SampleSchoolManagermentV1.Services
                 var result = timeTableList.Where(x => x.Classid == id)
                .Select(x => new
                {
+                   x.Id,
                    x.Day,
                    x.slot,
                    x.InformationSubject.SubjectName,
@@ -151,6 +152,7 @@ namespace SampleSchoolManagermentV1.Services
                 var result = timetable
                .Select(x => new
                {
+                   x.Id,
                    x.Day,
                    x.slot,
                    x.InformationSubject.SubjectName,
