@@ -117,8 +117,10 @@ namespace SampleSchoolManagermentV1.Services
                }).FirstOrDefault();
                 if (result != null)
                 {
+                    _logger.LogInformation($"Show information of Class : \"{result.ClassName}\"");
                     return result;
                 }
+                _logger.LogInformation($"Show information of Class with id : \"{result.Id}\"");
                 return null;
             }
             return null;
@@ -133,8 +135,11 @@ namespace SampleSchoolManagermentV1.Services
                 _mapper.Map(updateClassDTO, updateClass);
                 _unitOfWork.ClassRepository.Update(updateClass);
                 _unitOfWork.Complete();
+                _logger.LogInformation($"Update ClassName : \"{updateClass.ClassName} \" with id: \"{updateClass.Id}\" successfully ");
+
                 return true;
             }
+            _logger.LogInformation($"Cannot Update Class ");
             return false;
         }
     }

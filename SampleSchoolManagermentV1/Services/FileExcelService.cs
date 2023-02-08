@@ -11,10 +11,12 @@ namespace SampleSchoolManagermentV1.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public FileExcelService(IUnitOfWork unitOfWork, IMapper mapper)
+        private readonly ILogger<FileExcelService> _logger;
+        public FileExcelService(IUnitOfWork unitOfWork, IMapper mapper, ILogger<FileExcelService> logger)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _logger = logger;
         }
 
         public async Task<List<InforTimeTable>> CreateTimeTable(int id)
@@ -27,10 +29,13 @@ namespace SampleSchoolManagermentV1.Services
                .ToList();
                 if (result != null)
                 {
+                    _logger.LogInformation($"Export Data TimeTable of Class: to Excel");
                     return result;
                 }
+                _logger.LogError($"Cannot export Data TimeTable of Class: to Excel");
                 return null;
             }
+            _logger.LogError("Cannot export data");
             return null;
         }
     }
