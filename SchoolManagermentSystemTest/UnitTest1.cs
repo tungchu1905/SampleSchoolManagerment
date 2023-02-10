@@ -7,8 +7,11 @@ namespace SchoolManagermentSystemTest
     {
         private readonly ClassValidator _validator = new ClassValidator();
 
-        //[Fact]
-        //public void GivenAnInvalidClassNameValue_ShouldHaveValidationError()
-        //=> _validator.ShouldHaveChildValidator(model => model.ClassName, "Must Enter full");
+        [Fact]
+        public void GivenAnInvalidClassNameValue_ShouldHaveValidationError()
+        {
+            _validator.ShouldHaveChildValidator(model => model.ClassName, typeof(ClassValidator));
+        }
+       
     }
 }
