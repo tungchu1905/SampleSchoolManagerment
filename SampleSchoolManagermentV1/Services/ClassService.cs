@@ -6,6 +6,7 @@ using SampleSchoolManagermentV1.Repository.UnitOfWork;
 using SampleSchoolManagermentV1.Services.Interfaces;
 using X.PagedList;
 using SampleSchoolManagermentV1.Controllers;
+using SampleSchoolManagermentV1.Services.Exceptions;
 
 namespace SampleSchoolManagermentV1.Services
 {
@@ -63,7 +64,7 @@ namespace SampleSchoolManagermentV1.Services
             if (createClassDTO == null)
             {
                 _logger.LogError($"Cannot create new Class class name =\"{createClassDTO.ClassName}\".");
-                return false;
+                throw new StudentClassException();
             }
             var newClass = _mapper.Map<InforClass>(createClassDTO);
             await _unitOfWork.ClassRepository.Add(newClass);
